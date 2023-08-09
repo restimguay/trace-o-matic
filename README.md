@@ -44,8 +44,12 @@ console.error('This is from console.error() method.');
 console.debug('This is from console.debug() method.');
 ...
 ```
+Your existing code will work just fine.
+### Example outputs
+![Screenshot](https://raw.githubusercontent.com/restimguay/assets/main/basic-console-usage.png)
 
-### trace-o-matic supports all node and browser console native methods such as:
+### Other console methods
+Supports all node and browser console native methods such as:
 
 ```JavaScript
 console.assert();
