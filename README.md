@@ -12,7 +12,7 @@ For node js server projects
 
 `server.js`
 
-```
+```JavaScript
 ...
 require('dotenv').config();
 const express = require("express");
@@ -24,18 +24,18 @@ require('trace-o-matic');
 For node js web application projects such us react
 `App.js`
 
-```
+```JavaScript
 ...
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-require('trace-o-matic')
+require('trace-o-matic');
 function App()
 ...
 ```
 
 ### Basic Examples
 
-```
+```JavaScript
 ...
 console.log('This is from console.log() method.);
 console.info('This is from console.info() method.);
@@ -47,19 +47,19 @@ console.debug('This is from console.debug() method.);
 
 ### trace-o-matic supports all node and browser console native methods such as:
 
-```
-assert()
-clear()
-count()
-countReset()
-dir()
-dirxml()
-group()
-groupCollapsed()
-groupEnd()
-table()
-time()
-timeEnd()
-timeLog()
-timeStamp()
+```JavaScript
+console.assert();
+console.clear();
+console.count();
+console.countReset();
+console.dir();
+console.dirxml();
+console.group();
+console.groupCollapsed();
+console.groupEnd();
+console.table();
+console.time();
+console.timeEnd();
+console.timeLog();
+console.timeStamp();
 ```
