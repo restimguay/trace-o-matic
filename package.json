@@ -1,0 +1,33 @@
+{
+  "name": "trace-o-matic",
+  "version": "1.0.5",
+  "description": "An advance console wrapper for node and node-based web applications.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/restimguay/trace-o-matic.git"
+  },
+  "keywords": [
+    "console",
+    "color",
+    "terminal",
+    "node",
+    "react",
+    "nextjs",
+    "vue",
+    "javascript",
+    "vsc",
+    "chrome",
+    "edge",
+    "firefox"
+  ],
+  "author": "Resti Guay",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/restimguay/trace-o-matic/issues"
+  },
+  "homepage": "https://github.com/restimguay/trace-o-matic#readme"
+}
