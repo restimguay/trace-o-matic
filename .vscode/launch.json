@@ -9,7 +9,7 @@
       "request": "launch",
       "name": "Debug Object",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}\\test\\object.js"
+      "program": "${workspaceFolder}\\test\\test.js"
     }
   ]
 }

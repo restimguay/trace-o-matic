@@ -4,7 +4,7 @@
   "description": "An advance console wrapper for node and brosers.",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node .\\test\\test.js"
   },
   "repository": {
     "type": "git",

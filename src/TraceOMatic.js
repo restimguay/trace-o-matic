@@ -17,6 +17,7 @@ String.prototype.sprintS = function () {
 class TraceOMatic {
     constructor() {
         this.sourceIndex = 3;
+        this.api = [];
     }
     #getTimeWithMilliseconds() {
         var d = new Date(); // for now
@@ -109,14 +110,20 @@ class TraceOMatic {
         var trace = '';
         var time = this.#getTimeWithMilliseconds();
         var details = '';
+        const msg = message;
 
+        if (this.api['logger'] !== undefined) {
+            this.api['logger'].map((app) => {
+                app.instance[app.method](type, stack, msg)
+            });
+        }
         if (logEnv.outputFormat === 'json') {
             trace = { date: time, type: l.toUpperCase(), file: stack, message: message };
-
             this.printToConsole(type, details, trace);
         } else {
+
             if (logEnv.highlightMode === 'type') {
-                details = time + this.#colorize(color, typeText) + ' ' + stack, message;
+                details = time + this.#colorize(color, typeText) + ' ' + stack;
             } else if (logEnv.highlightMode === 'line') {
                 details = this.#colorize(color, time + typeText + ' ' + stack);
             } else if (logEnv.highlightMode === 'plain') {
@@ -162,6 +169,9 @@ class TraceOMatic {
     dirxml(object) {
         native_logger.dirxml(object);
     }
+    nativeInfo(...message) {
+        native_logger.info(...message);
+    }
     /**
      * Increases indentation of subsequent lines by spaces for groupIndentation length.
      * If one or more labels are provided, those are printed first without the additional indentation.
@@ -203,6 +213,26 @@ class TraceOMatic {
     timeLog(label, ...val1) {
 
         native_logger.timeLog(label, ...val1)
+    }
+    add(api) {
+        var api = new api();
+        var type = api.getType();
+        var method = api.getMethod();
+        var name = api.getName();
+        var version = api.getVersion();
+        if (this.api[type] === undefined) {
+            this.api[type] = [];
+        }
+        this.api[type].push({
+            instance: api,
+            method: method,
+            name: name,
+            version: version
+        })
+        api.mounted()
+        this.api[type].map((app) => {
+            console.log(app)
+        });
     }
 };
 

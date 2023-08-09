@@ -5,6 +5,31 @@ for (let number = 2; number <= 5; number++) {
     console.assert(number % 2 === 0, "%o", { number, errorMsg });
 }
 require('../');
+
+class Debugger {
+    mounted() {
+        console.nativeInfo('mounted')
+    }
+    getType() {
+        return 'logger';
+    }
+    getMethod() {
+        return 'capture';
+    }
+    getName() {
+        return 'Web Debugger';
+    }
+    getVersion() {
+        return '1.0.0';
+    }
+    capture(...message) {
+        console.nativeInfo(message[0]);
+        console.nativeInfo(message[1], message[2]);
+    }
+}
+
+console.add(Debugger);
+
 console.log("---------------------------------");
 console.log("hello %s", "world", " Welcome!");
 console.info("%s %s %d", "Hello", "Year", 2024);
