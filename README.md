@@ -37,11 +37,11 @@ function App()
 
 ```JavaScript
 ...
-console.log('This is from console.log() method.);
-console.info('This is from console.info() method.);
-console.warn('This is from console.warn() method.);
-console.error('This is from console.error() method.);
-console.debug('This is from console.debug() method.);
+console.log('This is from console.log() method.');
+console.info('This is from console.info() method.');
+console.warn('This is from console.warn() method.');
+console.error('This is from console.error() method.');
+console.debug('This is from console.debug() method.');
 ...
 ```
 
