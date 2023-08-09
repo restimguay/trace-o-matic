@@ -3,7 +3,7 @@ module.exports = logEnv = {
     removeBasePath: true,
     basePath: typeof window === 'undefined' ? '' : '',
     stackIndentionEnabled: true,
-    stackIndention: 40,
+    stackIndention: 90,
     indentionMarker: ".",
     replaceBracket: true,
     stackOpenBracket: "[ ",

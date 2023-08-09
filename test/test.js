@@ -71,3 +71,14 @@ console.groupCollapsed();
 console.log("world!");
 console.groupCollapsed();
 console.log("Hello again, this time inside a collapsed group!");
+console.groupEnd();
+console.clear();
+
+console.set('stackIndention', 50);
+console.set('basePath', 'C:\\Projects\\NodeProjects\\trace-o-matic\\');
+console.clear();
+console.log('This is from console.log() method.');
+console.info('This is from console.info() method.');
+console.warn('This is from console.warn() method.');
+console.error('This is from console.error() method.');
+console.debug('This is from console.debug() method.');
