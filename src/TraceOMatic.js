@@ -18,7 +18,7 @@ class TraceOMatic {
     constructor() {
         this.sourceIndex = 3;
     }
-    getTimeWithMilliseconds() {
+    #getTimeWithMilliseconds() {
         var d = new Date(); // for now
         var h = d.getHours(); // => 9
 
@@ -26,9 +26,9 @@ class TraceOMatic {
         var s = d.getSeconds(); // => 51
         var mil = d.getMilliseconds();
 
-        return this.fillWithZeros(2, h) + ':' + this.fillWithZeros(2, m) + ':' + this.fillWithZeros(2, s) + '.' + this.fillWithZeros(3, mil) + ' ';
+        return this.#fillWithZeros(2, h) + ':' + this.#fillWithZeros(2, m) + ':' + this.#fillWithZeros(2, s) + '.' + this.#fillWithZeros(3, mil) + ' ';
     }
-    fillWithZeros(len, str) {
+    #fillWithZeros(len, str) {
         while (str.length < len) {
             str = ("0" + str);
         }
@@ -40,7 +40,7 @@ class TraceOMatic {
         var val = newSet[1];
         logEnv[key] = val;
     }
-    colors() {
+    #colors() {
         return {
             foreGround: {
                 black(str) { return `\x1b[30m${str}\x1b[0m` },
@@ -66,7 +66,7 @@ class TraceOMatic {
             }
         }
     }
-    stack() {
+    #stack() {
         if (logEnv.showSource === false) {
             return '';
         }
@@ -100,14 +100,14 @@ class TraceOMatic {
         return path;
     }
     info(...message) {
-        this._write(this.stack(), '[INFO ]', 'green', 'info', message)
+        this.#write(this.#stack(), '[INFO ]', 'green', 'info', message)
     }
     log(...message) {
-        this._write(this.stack(), '[LOG  ]', 'white', 'log', message)
+        this.#write(this.#stack(), '[LOG  ]', 'white', 'log', message)
     }
-    _write(stack, typeText, color, type, message) {
+    #write(stack, typeText, color, type, message) {
         var trace = '';
-        var time = this.getTimeWithMilliseconds();
+        var time = this.#getTimeWithMilliseconds();
         var details = '';
 
         if (logEnv.outputFormat === 'json') {
@@ -116,11 +116,11 @@ class TraceOMatic {
             this.printToConsole(type, details, trace);
         } else {
             if (logEnv.highlightMode === 'type') {
-                details = time + this.colorize(color, typeText) + ' ' + stack, message;
+                details = time + this.#colorize(color, typeText) + ' ' + stack, message;
             } else if (logEnv.highlightMode === 'line') {
-                details = this.colorize(color, time + typeText + ' ' + stack);
+                details = this.#colorize(color, time + typeText + ' ' + stack);
             } else if (logEnv.highlightMode === 'plain') {
-                details = time + this.colorize('', typeText) + ' ' + stack;
+                details = time + this.#colorize('', typeText) + ' ' + stack;
             }
             if (logEnv.outputMode.includes('console')) {
                 this.printToConsole(type, details, message);
@@ -136,10 +136,10 @@ class TraceOMatic {
             native_logger[type](...newMesage);
         }
     }
-    colorize(color, typeText) {
+    #colorize(color, typeText) {
         if (logEnv.showType) {
             if (color !== "") {
-                return this.colors().foreGround[color](typeText);
+                return this.#colors().foreGround[color](typeText);
             } else {
                 return typeText;
             }
@@ -147,13 +147,13 @@ class TraceOMatic {
         return '';
     }
     error(...message) {
-        this._write(this.stack(), '[ERROR]', 'red', 'error', message)
+        this.#write(this.#stack(), '[ERROR]', 'red', 'error', message)
     }
     warn(...message) {
-        this._write(this.stack(), '[WARN ]', 'yellow', 'warn', message)
+        this.#write(this.#stack(), '[WARN ]', 'yellow', 'warn', message)
     }
     debug(...message) {
-        this._write(this.stack(), '[DEBUG]', 'blue', 'debug', message)
+        this.#write(this.#stack(), '[DEBUG]', 'blue', 'debug', message)
         //native_logger.debug(message);
     }
     table(...message) {
