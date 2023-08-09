@@ -156,6 +156,54 @@ class TraceOMatic {
         this._write(this.stack(), '[DEBUG]', 'blue', 'debug', message)
         //native_logger.debug(message);
     }
+    table(...message) {
+        native_logger.table(message);
+    }
+    dirxml(object) {
+        native_logger.dirxml(object);
+    }
+    /**
+     * Increases indentation of subsequent lines by spaces for groupIndentation length.
+     * If one or more labels are provided, those are printed first without the additional indentation.
+     * @function
+     * @param {...labels} any
+     * @returns {void}
+     */
+    group(...labels) {
+        native_logger.group(labels);
+    }
+    groupCollapsed() {
+        native_logger.groupCollapsed();
+    }
+    groupEnd() {
+        native_logger.groupEnd();
+    };
+    assert(assertion, ...arg1) {
+        native_logger.assert(assertion, ...arg1);
+    }
+    clear() {
+        native_logger.clear();
+    }
+    count() {
+        native_logger.count(object);
+    }
+    dir(object) {
+        native_logger.dir(object);
+    }
+    countReset(label = '') {
+        native_logger.countReset(label)
+    }
+    time(label) {
 
+        native_logger.time(label)
+    }
+    timeLog(label = '') {
+        native_logger.timeLog(label)
+    }
+    timeLog(label, ...val1) {
+
+        native_logger.timeLog(label, ...val1)
+    }
 };
+
 module.exports = console = new TraceOMatic();
