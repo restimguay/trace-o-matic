@@ -1,7 +1,7 @@
 {
   "name": "trace-o-matic",
-  "version": "1.0.9",
-  "description": "An advance console wrapper for node and brosers.",
+  "version": "1.0.12",
+  "description": "An advance console wrapper for node and browsers.",
   "main": "index.js",
   "scripts": {
     "test": "node .\\test\\test.js"

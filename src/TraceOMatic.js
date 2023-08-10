@@ -18,6 +18,8 @@ class TraceOMatic {
     constructor() {
         this.sourceIndex = 3;
         this.api = [];
+
+        this.warn.bind(this);
     }
     #getTimeWithMilliseconds() {
         var d = new Date(); // for now
@@ -68,16 +70,13 @@ class TraceOMatic {
         }
     }
     #stack() {
-        if (logEnv.showSource === false) {
-            return '';
-        }
         var e = new Error();
         var stack = e.stack.toString().split(/\r\n|\n/);
         var path = stack[this.sourceIndex];
         this.lastWriteLog = new Date().getMilliseconds();
         path = path.trim();
 
-        path = path.replace("at ", '');
+        path = path.replaceAll("at ", '');
         if (logEnv.replaceBracket) {
             path = path.replace("(", logEnv.stackOpenBracket);
             path = path.replace(")", logEnv.stackCloseBracket);
@@ -88,7 +87,6 @@ class TraceOMatic {
                 path = path + logEnv.stackCloseBracket;
             }
         }
-        path = path.replace("at ", '');
         path = path.trim();
         if (logEnv.removeBasePath === true) {
             path = path.replace(logEnv.basePath, '');
@@ -100,13 +98,40 @@ class TraceOMatic {
         }
         return path;
     }
+    /**
+     * 
+     * @param {String.prototype} stack 
+     */
+    #getPath(stack) {
+        stack = stack.substring(stack.indexOf(logEnv.stackOpenBracket) + 1, stack.indexOf(logEnv.stackCloseBracket));
+        stack = stack.trim();
+        return stack;
+    }
+    /**
+     * 
+     * @param {String.prototype} stack 
+     */
+    #getCallerMethod(stack) {
+
+        stack = stack.substring(0, stack.indexOf(logEnv.stackOpenBracket));
+        stack = stack.trim();
+        return stack;
+    }
     info(...message) {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         this.#write(this.#stack(), '[INFO ]', 'green', 'info', message)
     }
     log(...message) {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         this.#write(this.#stack(), '[LOG  ]', 'white', 'log', message)
     }
     #write(stack, typeText, color, type, message) {
+
+        var file = this.#getPath(stack);
+        var caller = this.#getCallerMethod(stack);
+        if (logEnv.showSource === false) {
+            stack = '';
+        }
         var trace = '';
         var time = this.#getTimeWithMilliseconds();
         var details = '';
@@ -114,7 +139,7 @@ class TraceOMatic {
 
         if (this.api['logger'] !== undefined) {
             this.api['logger'].map((app) => {
-                app.instance[app.method](type, stack, msg)
+                app.instance[app.method](type, caller, file, msg)
             });
         }
         if (logEnv.outputFormat === 'json') {
@@ -154,12 +179,15 @@ class TraceOMatic {
         return '';
     }
     error(...message) {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         this.#write(this.#stack(), '[ERROR]', 'red', 'error', message)
     }
     warn(...message) {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         this.#write(this.#stack(), '[WARN ]', 'yellow', 'warn', message)
     }
     debug(...message) {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         this.#write(this.#stack(), '[DEBUG]', 'blue', 'debug', message)
         //native_logger.debug(message);
     }
@@ -180,37 +208,48 @@ class TraceOMatic {
      * @returns {void}
      */
     group(...labels) {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         native_logger.group(labels);
     }
     groupCollapsed() {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         native_logger.groupCollapsed();
     }
     groupEnd() {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         native_logger.groupEnd();
     };
     assert(assertion, ...arg1) {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         native_logger.assert(assertion, ...arg1);
     }
     clear() {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         native_logger.clear();
     }
     count() {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         native_logger.count(object);
     }
     dir(object) {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         native_logger.dir(object);
     }
     countReset(label = '') {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         native_logger.countReset(label)
     }
     time(label) {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
 
         native_logger.time(label)
     }
     timeLog(label = '') {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
         native_logger.timeLog(label)
     }
     timeLog(label, ...val1) {
+        //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
 
         native_logger.timeLog(label, ...val1)
     }
