@@ -117,15 +117,24 @@ class TraceOMatic {
         stack = stack.trim();
         return stack;
     }
+    #types() {
+        return {
+            'info': { typeText: '[INFO  ]', color: 'white' },
+            'log': { typeText: '[LOG   ]', color: 'white' },
+            'warn': { typeText: '[WARN  ]', color: 'yellow' },
+            'debug': { typeText: '[DEBUG ]', color: 'blue' },
+            'error': { typeText: '[ERROR ]', color: 'green' }
+        }
+    }
     info(...message) {
         //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
-        this.#write(this.#stack(), '[INFO ]', 'green', 'info', message)
+        this.#write(this.#stack(), 'info', message)
     }
     log(...message) {
         //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
-        this.#write(this.#stack(), '[LOG  ]', 'white', 'log', message)
+        this.#write(this.#stack(), 'log', message)
     }
-    #write(stack, typeText, color, type, message) {
+    #write(stack, type, message) {
 
         var file = this.#getPath(stack);
         var caller = this.#getCallerMethod(stack);
@@ -135,11 +144,13 @@ class TraceOMatic {
         var trace = '';
         var time = this.#getTimeWithMilliseconds();
         var details = '';
-        const msg = message;
+        const msg = message.toString();
+
+        const { typeText, color } = this.#types()[type];
 
         if (this.api['logger'] !== undefined) {
             this.api['logger'].map((app) => {
-                app.instance[app.method](type, caller, file, msg)
+                app.instance[app.method](time, type, caller, file, msg)
             });
         }
         if (logEnv.outputFormat === 'json') {
@@ -180,15 +191,15 @@ class TraceOMatic {
     }
     error(...message) {
         //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
-        this.#write(this.#stack(), '[ERROR]', 'red', 'error', message)
+        this.#write(this.#stack(), 'error', message)
     }
     warn(...message) {
         //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
-        this.#write(this.#stack(), '[WARN ]', 'yellow', 'warn', message)
+        this.#write(this.#stack(), 'warn', message)
     }
     debug(...message) {
         //Microsoft Edge Related exception. If instance of this becomes undifined, you may need to reinstall React Debugger Tool in Edge.
-        this.#write(this.#stack(), '[DEBUG]', 'blue', 'debug', message)
+        this.#write(this.#stack(), 'debug', message)
         //native_logger.debug(message);
     }
     table(...message) {
@@ -254,7 +265,7 @@ class TraceOMatic {
         native_logger.timeLog(label, ...val1)
     }
     add(api) {
-        var api = new api();
+
         var type = api.getType();
         var method = api.getMethod();
         var name = api.getName();
@@ -270,7 +281,7 @@ class TraceOMatic {
         })
         api.mounted()
         this.api[type].map((app) => {
-            console.log(app)
+            console.nativeInfo(app)
         });
     }
 };
